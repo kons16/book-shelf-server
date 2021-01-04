@@ -17,7 +17,7 @@ services:
   api:
     build: .
     volumes:
-      - ./:/go/src/github.com/kons16/book-shlef-server
+      - ./:/go/src/github.com/kons16/book-shelf-server
     ports:
       - '8000:8000'
     depends_on:
