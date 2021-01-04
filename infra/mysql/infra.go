@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jmoiron/sqlx"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/joho/godotenv"
 )
 
-func NewMySQLDB() (*sqlx.DB, error) {
+func NewMySQLDB() (*gorm.DB, error) {
 	if err := godotenv.Load(); err != nil {
 		return nil, err
 	}
@@ -22,14 +22,9 @@ func NewMySQLDB() (*sqlx.DB, error) {
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_NAME"),
 	)
-
-	db, err := sqlx.Connect("mysql", connectionString)
+	db, err := gorm.Open("mysql", connectionString)
 	if err != nil {
-		return nil, fmt.Errorf("failed to open MySQL: %w", err)
-	}
-
-	if err := db.Ping(); err != nil {
-		return nil, fmt.Errorf("failed to ping: %w", err)
+		return nil, fmt.Errorf("Open mysql failed: %v", err)
 	}
 
 	return db, nil
