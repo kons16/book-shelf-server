@@ -4,9 +4,11 @@ import "crypto/rand"
 
 // ユーザーの認証周りの処理を行うエンティティ
 type Auth struct {
+	Token string
 }
 
-func GenerateToken(string) string {
+// token の生成を行う
+func GenerateToken() *Auth {
 	table := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_@"
 	l := len(table)
 	ret := make([]byte, 128)
@@ -16,5 +18,5 @@ func GenerateToken(string) string {
 		ret[i] = table[int(src[i])%l]
 	}
 
-	return string(ret)
+	return &Auth{Token: string(ret)}
 }
