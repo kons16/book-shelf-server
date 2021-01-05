@@ -1,12 +1,13 @@
 package web
 
 import (
+	"github.com/kons16/book-shelf-server/usecase"
+	"github.com/kons16/book-shelf-server/web/handler"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"net/http"
 )
 
-func NewServer()  *echo.Echo {
+func NewServer(userUC *usecase.UserUseCase) *echo.Echo {
 	e := echo.New()
 
 	e.Use(middleware.Logger())
@@ -19,6 +20,11 @@ func NewServer()  *echo.Echo {
 		ContentSecurityPolicy: "default-src 'self'",
 	}))
 
+	v1 := e.Group("/api/v1")
+
+	userHandler := handler.NewUserHandler(userUC)
+
+	v1.POST("/user", userHandler.Create)
+
 	return e
 }
-

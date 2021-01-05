@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/kons16/book-shelf-server/usecase"
 	"github.com/kons16/book-shelf-server/web"
 	"os"
 
@@ -9,13 +10,17 @@ import (
 )
 
 func main() {
-	_, err := MySQL.NewMySQLDB()
+	dbMap, err := MySQL.NewMySQLDB()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(0)
 	}
 
-	s := web.NewServer()
+	userRepo := MySQL.NewUserRepository(dbMap)
+
+	userUC := usecase.NewUserUseCase(userRepo)
+
+	s := web.NewServer(userUC)
 
 	if err := s.Start(":" + "8000"); err != nil {
 		fmt.Println(err)
