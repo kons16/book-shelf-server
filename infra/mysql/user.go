@@ -16,6 +16,6 @@ func NewUserRepository(dbMap *gorm.DB) *UserRepository {
 }
 
 // Create は ユーザーを新規登録するSQLを記述
-func (ur *UserRepository) Create(user *entity.User) error {
-	return nil
+func (ur *UserRepository) Create(user *entity.User) (string, error) {
+	return "", nil
 }
