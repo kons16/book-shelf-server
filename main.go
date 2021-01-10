@@ -18,6 +18,7 @@ func main() {
 
 	userRepo := MySQL.NewUserRepository(dbMap)
 
+	// ここで Repository の構造体と interface を紐付けさせる
 	userUC := usecase.NewUserUseCase(userRepo)
 
 	s := web.NewServer(userUC)
