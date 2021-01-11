@@ -29,11 +29,11 @@ func (uc *UserUseCase) Create(email string, password string) (string, error) {
 	}
 
 	id := strconv.Itoa(newUser.ID)
-	_, err = uc.userRepo.CreateToken(id)
+	token, err := uc.userRepo.CreateToken(id)
 	if err != nil {
 		fmt.Println(err)
 		return "", nil
 	}
 
-	return "", nil
+	return token, nil
 }

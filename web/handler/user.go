@@ -18,7 +18,10 @@ func NewUserHandler(userUC *usecase.UserUseCase) *UserHandler {
 
 // Create は POST /user に対応するハンドラー
 func (uh *UserHandler) Create(c echo.Context) error {
-	token, err := uh.userUC.Create()
+	email := c.FormValue("email")
+	password := c.FormValue("password")
+
+	token, err := uh.userUC.Create(email, password)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
